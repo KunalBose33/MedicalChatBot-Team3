@@ -1,0 +1,41 @@
+{
+  "resourceType": "Bundle",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "4548-4",
+              "display": "HbA1c"
+            }
+          ]
+        },
+        "valueQuantity": {
+          "value": 6.8,
+          "unit": "%"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "13457-7",
+              "display": "LDL"
+            }
+          ]
+        },
+        "valueQuantity": {
+          "value": 110,
+          "unit": "mg/dL"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+# --- Core web framework ---
+fastapi==0.112.2
+uvicorn==0.30.6
+
+# --- Environment management ---
+python-dotenv==1.0.1
+pydantic==2.7.4
+
+# --- PDF ingestion ---
+pypdf==4.3.1
+
+# --- Data handling ---
+numpy==1.26.4
+pandas==2.2.2
+
+# --- Embeddings + vector search ---
+sentence-transformers==2.2.2
+faiss-cpu==1.7.4
+
+# --- LLM APIs ---
+mistralai==0.1.8   # For cloud Mistral API
+requests==2.32.3   # Needed for Ollama local calls
+
+# --- Misc utilities ---
+python-dateutil==2.9.0.post0
+six==1.17.0
+typing-extensions==4.15.0
+sniffio==1.3.1
+anyio==4.10.0
+colorama==0.4.6
+click==8.2.1
+h11==0.16.0
+idna==3.10
+pytz==2025.2
+tzdata==2025.2
+annotated-types==0.7.0
+starlette==0.38.6
+
+# Placeholders for Azure (only needed when you enable USE_AZURE=True)
+# azure-ai-textanalytics
+# azure-search-documents
+# openai>=1.40.0
