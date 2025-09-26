@@ -1,0 +1,206 @@
+{
+  "Hemoglobin": {
+    "male": [13.0, 17.0],
+    "female": [12.0, 15.0],
+    "unit": "g/dL"
+  },
+  "Hematocrit": {
+    "male": [40.0, 52.0],
+    "female": [36.0, 48.0],
+    "unit": "%"
+  },
+  "RBC": {
+    "male": [4.7, 6.1],
+    "female": [4.2, 5.4],
+    "unit": "x10^12/L"
+  },
+  "WBC": {
+    "general": [4.0, 11.0],
+    "unit": "x10^9/L"
+  },
+  "Platelets": {
+    "general": [150, 450],
+    "unit": "x10^9/L"
+  },
+  "MCV": {
+    "general": [80, 100],
+    "unit": "fL"
+  },
+  "MCH": {
+    "general": [27, 33],
+    "unit": "pg"
+  },
+  "MCHC": {
+    "general": [32, 36],
+    "unit": "g/dL"
+  },
+  "RDW": {
+    "general": [11.5, 14.5],
+    "unit": "%"
+  },
+  "Neutrophils": {
+    "general": [40, 70],
+    "unit": "%"
+  },
+  "Lymphocytes": {
+    "general": [20, 40],
+    "unit": "%"
+  },
+  "Monocytes": {
+    "general": [2, 8],
+    "unit": "%"
+  },
+  "Eosinophils": {
+    "general": [1, 4],
+    "unit": "%"
+  },
+  "Basophils": {
+    "general": [0, 1],
+    "unit": "%"
+  },
+  "Glucose (Fasting)": {
+    "general": [70, 99],
+    "unit": "mg/dL"
+  },
+  "Glucose (Postprandial)": {
+    "general": [70, 140],
+    "unit": "mg/dL"
+  },
+  "HbA1c": {
+    "general": [4.0, 5.6],
+    "unit": "%"
+  },
+  "Urea": {
+    "general": [7, 20],
+    "unit": "mg/dL"
+  },
+  "Creatinine": {
+    "male": [0.74, 1.35],
+    "female": [0.59, 1.04],
+    "unit": "mg/dL"
+  },
+  "eGFR": {
+    "general": [90, 120],
+    "unit": "mL/min/1.73m2"
+  },
+  "Uric Acid": {
+    "male": [3.5, 7.2],
+    "female": [2.6, 6.0],
+    "unit": "mg/dL"
+  },
+  "Sodium": {
+    "general": [135, 145],
+    "unit": "mmol/L"
+  },
+  "Potassium": {
+    "general": [3.5, 5.0],
+    "unit": "mmol/L"
+  },
+  "Chloride": {
+    "general": [96, 106],
+    "unit": "mmol/L"
+  },
+  "Calcium": {
+    "general": [8.5, 10.5],
+    "unit": "mg/dL"
+  },
+  "Phosphorus": {
+    "general": [2.5, 4.5],
+    "unit": "mg/dL"
+  },
+  "Magnesium": {
+    "general": [1.7, 2.2],
+    "unit": "mg/dL"
+  },
+  "Total Protein": {
+    "general": [6.0, 8.3],
+    "unit": "g/dL"
+  },
+  "Albumin": {
+    "general": [3.5, 5.0],
+    "unit": "g/dL"
+  },
+  "Globulin": {
+    "general": [2.0, 3.5],
+    "unit": "g/dL"
+  },
+  "A/G Ratio": {
+    "general": [1.0, 2.1],
+    "unit": "-"
+  },
+  "Bilirubin (Total)": {
+    "general": [0.1, 1.2],
+    "unit": "mg/dL"
+  },
+  "ALT (SGPT)": {
+    "general": [7, 56],
+    "unit": "U/L"
+  },
+  "AST (SGOT)": {
+    "general": [10, 40],
+    "unit": "U/L"
+  },
+  "ALP": {
+    "general": [44, 147],
+    "unit": "U/L"
+  },
+  "GGT": {
+    "general": [9, 48],
+    "unit": "U/L"
+  },
+  "Cholesterol (Total)": {
+    "general": [0, 200],
+    "unit": "mg/dL"
+  },
+  "HDL": {
+    "general": [40, 60],
+    "unit": "mg/dL"
+  },
+  "LDL": {
+    "general": [0, 100],
+    "unit": "mg/dL"
+  },
+  "Triglycerides": {
+    "general": [0, 150],
+    "unit": "mg/dL"
+  },
+  "TSH": {
+    "general": [0.4, 4.0],
+    "unit": "mIU/L"
+  },
+  "Free T4": {
+    "general": [0.8, 1.8],
+    "unit": "ng/dL"
+  },
+  "Free T3": {
+    "general": [2.3, 4.2],
+    "unit": "pg/mL"
+  },
+  "Vitamin B12": {
+    "general": [200, 900],
+    "unit": "pg/mL"
+  },
+  "Vitamin D (25-OH)": {
+    "general": [30, 100],
+    "unit": "ng/mL"
+  },
+  "Iron": {
+    "male": [65, 175],
+    "female": [50, 170],
+    "unit": "µg/dL"
+  },
+  "Ferritin": {
+    "male": [24, 336],
+    "female": [11, 307],
+    "unit": "ng/mL"
+  },
+  "CRP": {
+    "general": [0, 3],
+    "unit": "mg/L"
+  },
+  "ESR": {
+    "male": [0, 15],
+    "female": [0, 20],
+    "unit": "mm/hr"
+  }
+}

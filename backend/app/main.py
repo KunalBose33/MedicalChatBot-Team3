@@ -34,5 +34,19 @@ async def upload(file: UploadFile = File(...)):
         records = parse_csv_bytes(await file.read()) 
     else:
         records = parse_fhir_bytes(await file.read())
+
     scored = normalize_and_score(records)
-    return scored
+
+    if scored["flagged"]:
+        summary_text = "The following results are outside normal ranges:\n" + "\n".join(scored["flagged"])
+        explanation = generate_patient_answer(summary_text, temperature=settings.TEMPERATURE)
+    else:
+        explanation = "All uploaded results appear within the normal reference ranges. " \
+                      "This is not a diagnosis. Please consult a healthcare provider."
+
+    return {
+        "summary": scored["per_test"],
+        "explanation": explanation,
+        "disclaimer": scored["disclaimer"]
+    }
+

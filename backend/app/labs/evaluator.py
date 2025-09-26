@@ -1,15 +1,20 @@
 from __future__ import annotations
-import io, csv, json
+import io, csv, json, re
 from typing import List, Dict
-
-REFS = {
-    "HbA1c": {"unit": "%", "ranges": {"normal": (0, 5.7), "prediabetes": (5.7, 6.5), "diabetes": (6.5, 50)}},
-    "LDL": {"unit": "mg/dL", "ranges": {"optimal": (0, 100), "borderline": (100, 129), "high": (130, 1000)}},
-    "HDL_male": {"unit": "mg/dL", "ranges": {"low": (0, 40), "normal": (40, 1000)}},
-    "HDL_female": {"unit": "mg/dL", "ranges": {"low": (0, 50), "normal": (50, 1000)}},
-}
+from pathlib import Path
+from pdf2image import convert_from_bytes
+import pytesseract
+from PIL import Image
 
 DISCLAIMER = "This is educational information only and not medical advice."
+
+# Load extended reference ranges (50+ tests)
+REF_PATH = Path(__file__).parent.parent / "config" / "reference_ranges.json"
+if REF_PATH.exists():
+    with open(REF_PATH, "r") as f:
+        REFS = json.load(f)
+else:
+    REFS = {}
 
 def parse_csv_bytes(b: bytes) -> List[Dict]:
     text = b.decode("utf-8")
@@ -35,8 +40,38 @@ def parse_fhir_bytes(b: bytes) -> List[Dict]:
             })
     return out
 
+def parse_pdf_bytes(b: bytes) -> List[Dict]:
+    """
+    Convert PDF (including scanned) into structured lab test results.
+    Looks for lines like 'Glucose 180 mg/dL' or 'Hemoglobin: 13.5 g/dL'
+    """
+    records = []
+    pages = convert_from_bytes(b)
+
+    for page in pages:
+        text = pytesseract.image_to_string(page)
+        for line in text.splitlines():
+            match = re.match(r"([A-Za-z0-9 \-\(\)\/]+)[: ]+([\d\.]+)\s*([A-Za-z\/\^\%\d]+)?", line)
+            if match:
+                test_name = match.group(1).strip()
+                value = match.group(2)
+                unit = match.group(3) or ""
+                try:
+                    records.append({
+                        "test_name": test_name,
+                        "value": float(value),
+                        "unit": unit,
+                        "sex": None,
+                        "age": None,
+                    })
+                except ValueError:
+                    continue
+    return records
+
 def normalize_and_score(rows: List[Dict]) -> Dict:
     per_test = []
+    flagged = []
+
     for r in rows:
         name = (r.get("test_name") or "").strip()
         value = float(r.get("value", 0))
@@ -45,31 +80,24 @@ def normalize_and_score(rows: List[Dict]) -> Dict:
 
         status = "unknown"
         reference = None
-        note = None
 
-        if name == "HbA1c":
-            ref = REFS["HbA1c"]
-            reference = "< 5.7% normal; 5.7–6.4% prediabetes; ≥ 6.5% diabetes"
-            if value < 5.7: status = "normal"
-            elif value < 6.5: status = "borderline-high"
-            else: status = "high"
-            note = "Consider diet, activity; follow up with a clinician."
-        elif name == "LDL":
-            ref = REFS["LDL"]
-            reference = "Optimal < 100 mg/dL"
-            if value < 100: status = "normal"
-            elif value < 130: status = "borderline-high"
-            else: status = "high"
-            note = "Lifestyle changes are helpful; discuss targets with a clinician."
-        elif name == "HDL":
-            key = "HDL_male" if sex == "male" else "HDL_female"
-            reference = "Male: >=40 mg/dL; Female: >=50 mg/dL"
-            if value < (40 if sex == "male" else 50):
-                status = "low"
-                note = "Low HDL may increase risk; consider exercise and diet."
-            else:
-                status = "normal"
-                note = "HDL in a healthy range."
+        if name in REFS:
+            entry = REFS[name]
+            normal_low, normal_high = None, None
+
+            if isinstance(entry, dict) and "general" in entry:
+                normal_low, normal_high = entry["general"]
+            elif isinstance(entry, dict) and sex and sex in entry:
+                normal_low, normal_high = entry[sex]
+
+            if normal_low is not None and normal_high is not None:
+                reference = f"{normal_low}–{normal_high} {entry.get('unit','')}"
+                if value < normal_low:
+                    status = "low"
+                elif value > normal_high:
+                    status = "high"
+                else:
+                    status = "normal"
 
         per_test.append({
             "test_name": name,
@@ -77,9 +105,9 @@ def normalize_and_score(rows: List[Dict]) -> Dict:
             "unit": unit,
             "status": status,
             "reference": reference,
-            "note": note,
-            "source": "kb/lipids.md" if name in ("LDL", "HDL") else "kb/diabetes.md"
         })
-    
-    summary = "Basic interpretation generated. This is not medical advice."
-    return {"summary": summary, "per_test": per_test, "disclaimer": DISCLAIMER}
+
+        if status in ("low", "high"):
+            flagged.append(f"{name}: {value}{unit} ({status})")
+
+    return {"per_test": per_test, "flagged": flagged, "disclaimer": DISCLAIMER}

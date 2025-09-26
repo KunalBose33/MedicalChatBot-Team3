@@ -36,6 +36,11 @@ tzdata==2025.2
 annotated-types==0.7.0
 starlette==0.38.6
 
+pytesseract
+pdf2image
+pillow
+
+
 # Placeholders for Azure (only needed when you enable USE_AZURE=True)
 # azure-ai-textanalytics
 # azure-search-documents
