@@ -24,11 +24,11 @@ serving as the core for a future web application with intelligent health insight
 ---
 
 ## 🏗️ Project Structure Overview
-app/
+'''app/
 ├─ api/ # API endpoints (auth, chat, file upload)
 ├─ models/ # Database models (User, Chat, File)
 ├─ schemas/ # Request/response validation with Pydantic
 ├─ services/ # Business logic (chat flow, file parsing)
 ├─ repositories/# Database CRUD operations
 ├─ core/ # Config, security, and app settings
-└─ main.py # FastAPI application entry point
+└─ main.py # FastAPI application entry point'''
