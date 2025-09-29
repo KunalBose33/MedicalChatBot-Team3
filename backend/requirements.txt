@@ -39,7 +39,7 @@ starlette==0.38.6
 pytesseract
 pdf2image
 pillow
-
+python-multipart
 
 # Placeholders for Azure (only needed when you enable USE_AZURE=True)
 # azure-ai-textanalytics
