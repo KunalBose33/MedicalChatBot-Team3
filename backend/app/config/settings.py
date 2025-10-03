@@ -37,3 +37,16 @@ class Settings(BaseModel):
 
 
 settings = Settings()
+
+from pydantic_settings import BaseSettings
+
+class Settings(BaseSettings):
+    # existing stuff...
+    GOOGLE_CLIENT_ID: str | None = None
+    GOOGLE_CLIENT_SECRET: str | None = None
+    GOOGLE_REDIRECT_URI: str | None = None
+
+    class Config:
+        env_file = ".env"
+
+settings = Settings()

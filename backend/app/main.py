@@ -36,3 +36,5 @@ async def upload(file: UploadFile = File(...)):
         records = parse_fhir_bytes(await file.read())
     scored = normalize_and_score(records)
     return scored
+
+# app.include_router(google_auth.router, prefix="/api/v1")
